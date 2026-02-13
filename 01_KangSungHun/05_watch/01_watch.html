@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>watch</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <pre>
+    * watch
+      - 반응형 데이터의 변경을 감지하고 그에 따른 동작을 수행하는 함수
+      - 반응형 데이터가 변한 시점에 부수 효과(API 호출, 라우팅)를
+        실행 할 때 사용
+  </pre>
+  
+  <div id="step1">
+    <h5>현재 값 : {{ currentValue }}</h5>
+    <h5>이전 값 : {{ previousValue }}</h5>
+    <div>
+      입력 : <input type="text" v-model="currentValue">
+    </div>
+  </div>
+  
+  <hr>
+  
+  <div id="step2">
+    <p>{{ sum }}</p>
+    <button @click="x++">x++</button>
+    <button @click="y++">y++</button>
+    <button @click="z++">z++</button>
+  </div>
+  
+  <hr>
+  <div id="step3">
+    <p>{{ sum }}</p>
+    <button @click="x++">x++</button>
+    <button @click="y++">y++</button>
+    <button @click="z++">z++</button>
+  </div>
+  
+  
+  
+  <script>
+      const {createApp, ref, watch} = Vue;
+
+      createApp({
+          name : "watch test app",
+          setup(){
+              const currentValue = ref('');
+              const previousValue = ref('');
+
+              // watch(propertyName, callback(newValue, oldValue) => {})
+              // 1. propertyName : 변경을 감지할 반응형 변수
+              // 2. callback : 지정된 반응형 변수가 변경됭 때 마다 수행할 함수
+              watch(currentValue, (nv, ov) => {
+                  console.log("nv : ", nv);
+                  console.log("ov : ", ov);
+                  previousValue.value = ov;
+              });
+
+              return {currentValue, previousValue}
+          }
+      }).mount('#step1');
+
+
+      /* 다중 속성 변경 감지 */
+      createApp({
+          setup(){
+              const x = ref(0);
+              const y = ref(0);
+              const z = ref(0);
+              const sum = ref(0);
+
+              // [] 을 이용해서 여러 반응형 변수 변경 감시
+              watch([x,y,z], (nv, ov) => {
+                  sum.value = x.value + y.value + z.value;
+              });
+
+              return {x,y,z,sum}
+          }
+      }).mount("#step2");
+
+
+
+      createApp({
+          setup(){
+              const x = ref(0);
+              const y = ref(0);
+              const z = ref(0);
+              const sum = ref(0);
+
+              // watch(()=>{}, ()=>{})
+              // - 첫 번째 콜백 함수에서 다루는 대상만 감시
+              // - 첫 번째 콜백 함수에서 반환된 값을
+              //   두 번째 콜백 함수에서 매개 변수로 전달 받아서 사용 가능
+              watch(() => {
+                  return x.value + y.value;
+              }, () => {});
+
+              return {x,y,z,sum}
+          }
+      }).mount("#step3");
+  
+  
+  </script>
+</body>
+</html>

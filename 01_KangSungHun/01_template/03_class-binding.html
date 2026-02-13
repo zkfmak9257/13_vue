@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>class-binding</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  
+  <style>
+      #step1 > div {
+          border: 1px solid black;
+          padding: 10px;
+      }
+
+      /* 클래스가 hover인 요소에 마우스가 올라갔을 때 */
+      .hover:hover {
+          background-color: red;
+      }
+
+      .size {
+          width: 150px;
+          height: 150px;
+      }
+  
+  </style>
+</head>
+<body>
+  <div id="step1">
+    
+    <!--
+      class에 대입된 객체의 프로퍼티 값이 true인 key만
+      class 속성 값으로 적용된다. (false는 class 속성으로 적용 X)
+    -->
+    <div v-bind:class="{hover : isHover}" v-text="isHover"></div>
+    <div :class="{size : isSize}" v-text="isSize"></div>
+    
+    <button @click="changeHover">hover 변경</button>
+    <button @click="changeSize">size 변경</button>
+    
+    <hr>
+    <!--    {hover : true, size : false }-->
+    <div :class="classObj">{{classObj}}</div>
+  </div>
+  
+  
+  <script>
+      const {createApp, ref, reactive} = Vue;
+
+      createApp({
+          name: "App",
+          setup() {
+              const isHover = ref(true);
+              const isSize = ref(true);
+
+              const changeHover = () => isHover.value = !isHover.value;
+              const changeSize = () => isSize.value = !isSize.value;
+
+              /* reactive에 ref()로 지정된 상태 변수 값을 넣고 싶을 때
+              * .value를 사용하면 -> 고정된 값
+              * .value를 사용 X -> 동적인 값
+              * */
+              const classObj = reactive({
+                  hover: isHover,
+                  size: isSize
+              });
+
+
+              return {isHover, isSize, changeHover, changeSize, classObj};
+          }
+      }).mount("#step1");
+  
+  </script>
+
+</body>
+</html>

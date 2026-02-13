@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>v-model</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <h1>v-model : 양방향 데이터 바인딩</h1>
+  <pre>
+    * v-bind : 단방향 데이터 바인딩
+      주로 속성 설정에 사용
+    
+      * v-model : 양방향 데이터 바인딩
+        주로 html 입력 요소(input)와
+        ref(), reactive() 상태 변수(반응형 변수)와 자동으로 연결할 때 사용
+    </pre>
+    
+  <div id="app">
+    <div>
+      <h5>단방향(v-bind)</h5>
+      <!-- @input == 입력을 감지했을 때 -->
+      <input type="text"
+             @input="input1 = $event.target.value"
+             v-bind:value="input1">
+      <p>결과 : {{input1}}</p>
+    </div>
+    
+    <div>
+      <h5>양방향 (v-model)</h5>
+      <input type="text" v-model="input2">
+      <p>결과 : {{input2}}</p>
+    </div>
+  </div>
+  
+  <hr>
+  <div id="step1">
+    <h3>회원 가입</h3>
+    <label>이름</label>
+    <input type="text" v-model="name">
+    
+    <!-- lazy : 입력 값이 바로 상태 변수에 반영되지 않고
+      blur(초점을 잃었을 때) 반영되게 함
+    -->
+    <br>
+    <label>주소</label>
+    <input type="text" v-model.lazy="address">
+    
+    <!-- number : 입력 값을 숫자로 자동 형변환
+      숫자로 시작하지 않거나, 변환 불가능한 경우
+      상태 변수로 값 반영 X
+    -->
+    <br>
+    <label>나이</label>
+    <input type="text" v-model.number="age">
+    
+    <!-- trim : 입력 값 앞 뒤의 공백을 자동 제거 -->
+    <br>
+    <label>자기소개</label>
+    <input type="text" size="50" v-model.trim="introduce">
+    
+    <hr>
+    
+    <div>
+      <h3>입력된 값</h3>
+      <h5>{{ name }}</h5>
+      <h5>{{ address }}</h5>
+      <h5>{{ age }}</h5>
+      <h5>{{ introduce }}</h5>
+    </div>
+    <hr>
+  
+  
+  </div>
+  
+  
+  <script>
+      const {createApp, ref} = Vue;
+
+      createApp({
+          name : "App",
+          setup(){
+              const input1 = ref('');
+              const input2 = ref('');
+
+              return {input1, input2}
+          }
+      }).mount('#app');
+
+
+      createApp({
+          name : "signup form app",
+          setup(){
+              const name = ref('');
+              const address = ref('');
+              const age = ref('');
+              const introduce = ref('');
+
+              return {name, address, age, introduce}
+          }
+      }).mount("#step1");
+  
+  
+  </script>
+
+</body>
+</html>

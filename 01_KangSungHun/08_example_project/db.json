@@ -1,0 +1,74 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "Vue Router 시작하기",
+      "content": "Vue Router는 Vue.js의 공식 라우팅 라이브러리입니다.\n\n싱글 페이지 애플리케이션(SPA)을 구축할 때 필수적인 도구이며, 컴포넌트 기반 라우팅을 제공합니다.\n\n주요 기능:\n1. 동적 라우트 매칭\n2. 중첩 라우트 설정\n3. 네비게이션 가드\n4. 히스토리 모드 지원\n\n이제 Vue Router를 사용하여 멋진 웹 애플리케이션을 만들어보세요!",
+      "author": "김개발",
+      "createdAt": "2026-02-01T10:30:00.000Z",
+      "category": "frontend"
+    },
+    {
+      "id": "2",
+      "title": "Axios 완벽 가이드",
+      "content": "Axios는 Promise 기반의 HTTP 클라이언트입니다.\n\nHTTP 통신을 쉽게 할 수 있도록 도와주며, 브라우저와 Node.js에서 모두 사용할 수 있습니다.\n\n주요 특징:\n- Promise 기반 API\n- 요청/응답 인터셉터\n- 자동 JSON 변환\n- CSRF 보호\n- 타임아웃 설정\n\nRESTful API 통신에 완벽한 선택입니다!",
+      "author": "이코딩",
+      "createdAt": "2026-02-01T14:15:30.000Z",
+      "category": "frontend"
+    },
+    {
+      "id": "3",
+      "title": "JSON Server로 빠른 프로토타이핑",
+      "content": "JSON Server는 프론트엔드 개발자를 위한 최고의 도구입니다!\n\n단 몇 분 만에 RESTful API를 구축할 수 있으며, 실제 백엔드 없이도 풀스택 개발 경험을 할 수 있습니다.\n\n설치 방법:\nnpm install -D json-server\n\n실행 방법:\njson-server --watch db.json --port 3000\n\n이제 GET, POST, PUT, DELETE 모든 것이 가능합니다!",
+      "author": "박프론트",
+      "createdAt": "2026-01-30T09:45:20.000Z",
+      "category": "frontend"
+    },
+    {
+      "id": "76d0",
+      "title": "test",
+      "content": "123",
+      "author": "123",
+      "category": "frontend",
+      "createdAt": "2026-02-01T19:28:25.563Z"
+    },
+    {
+      "id": "33cf",
+      "title": "fff",
+      "content": "asdas",
+      "author": "ddd",
+      "category": "backend",
+      "createdAt": "2026-02-01T19:28:35.820Z"
+    },
+    {
+      "id": "16d5",
+      "title": "ㄹㅇㅁㄴㄹㅇㄴㅁㄹㅇㅁㄴ",
+      "content": "ㄹㅇㅁㄴㄹㅇㄴㅁㄹㅇㄴㅁ",
+      "author": "ㄹㅇㄴㅁㄹㅇㄴㅁ",
+      "category": "frontend",
+      "createdAt": "2026-02-02T07:21:07.110Z"
+    },
+    {
+      "id": "d259",
+      "title": "ㄹㅇㅁㄹㅇㄴㅁㄹㅇㄴㅁ",
+      "content": "ㅇㄹㄴㅁㄹㅇㄴㅁㄹㅇㄴㅁ",
+      "author": "ㅇㄹㅁㄴㄹㅇㄴㅁㄹㅇㄴㅁ",
+      "category": "frontend",
+      "createdAt": "2026-02-02T07:21:26.039Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "frontend",
+      "name": "프론트엔드"
+    },
+    {
+      "id": "backend",
+      "name": "백엔드"
+    },
+    {
+      "id": "database",
+      "name": "데이터베이스"
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>event</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="step1"></div>
+  
+  <hr>
+  <div id="step2">
+    <div>num is {{ num }}</div>
+    <button @click="increase">알림</button>
+    <button @click="clear">초기화</button>
+  </div>
+  
+  <hr>
+  <div id="step3">
+    <h3>keyup 이벤트</h3>
+    
+    <!-- $event : 해당 요소에서 발생한 이벤트 객체 -->
+    <input type="text" @keyup="handlerKeyup($event)">
+    <br>
+    
+    <!-- 이벤트 수식어
+      - .enter , .stop, .prevent, .once 등 존재
+      - 특징 이벤트에 대한 부가적인 조건, 효과를 추가할 수 있음
+    -->
+    <input type="text" @keyup.enter="handlerEnterKey">
+  </div>
+  
+  <hr>
+  <div id="step4">
+    <h4>prevent : 기본 브라우저 이벤트 막기</h4>
+    <a href="https://www.naver.com"
+       target="_blank" @click.prevent="preventFn">네이버로 이동</a>
+    
+    <h4>이벤트 전파 방지(버블링)[ .stop ]</h4>
+    <div @click="bubblingFn">
+      <button @click.stop="bubblingStopFn">버블링 테스트</button>
+    </div>
+    
+    <h4>하위 요소 이벤트 억제 [.slef]</h4>
+    <div>
+      <button @click.self="selfTest">
+        self <span>other</span>
+      </button>
+    </div>
+    
+    <h4>이벤트를 한 번만 동작(1회용 이벤트) [.once]</h4>
+    <div>
+      <button @click.once="onceTest">
+        한번만 동작하는 버튼
+      </button>
+    </div>
+  
+  </div>
+  
+  
+  
+  <script>
+      const {createApp, ref} = Vue;
+
+      createApp({
+          name : "v-on, template 속성 test app",
+
+          setup(){
+              const count = ref(0);
+              return {count}
+          },
+
+          template: `
+            <div>count is {{ count }}</div>
+            <button @click="count++">count++</button>
+          `
+      }).mount("#step1");
+
+
+      /* 알림 버튼이 클릭될 때 마다 num을 1씩 증가
+      * num이 10의 배수가될 때 마다 alert를 이용해서 num값을 출력
+      * */
+      createApp({
+          name : "num test app",
+          setup(){
+              const num = ref(0);
+
+              const increase = () => {
+                  num.value++;
+                  if(num.value % 10 === 0){
+                      alert(`현재 num : ${num.value}`);
+                  }
+              }
+
+              const clear = () => {
+                  num.value = 0;
+                  alert("초기화 되었습니다");
+              }
+
+              return {num, increase, clear}
+          }
+
+      }).mount("#step2");
+
+
+      /* keyup 이벤트 */
+      createApp({
+          name : "keyup test app",
+          setup(){
+              const handlerKeyup = (event) => {
+                  console.log("event : ", event);
+
+                  if(event.key === 'Enter'){
+                      alert("엔터를 눌렀습니다!");
+                  }
+              }
+
+              const handlerEnterKey = () => alert("엔터!!!!!");
+
+              return {handlerKeyup, handlerEnterKey};
+          }
+      }).mount("#step3");
+
+
+      createApp({
+          name: "event test app",
+          setup(){
+              const preventFn = () => console.log("기본 이벤트 막기!!");
+
+              const bubblingFn = () => console.log("버블버블");
+              const bubblingStopFn = () => console.log("이벤트 전파(버블링) 방지!!");
+
+              const selfTest = () => console.log("오직 나만!!!");
+              const onceTest = () => console.log("1회용 이벤트");
+
+
+              return {preventFn, bubblingFn, bubblingStopFn, selfTest, onceTest}
+          }
+
+      }).mount("#step4");
+  
+  
+  </script>
+
+</body>
+</html>

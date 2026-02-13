@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>computed</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <pre>
+     * computed 함수
+        - 반응형 데이터를 기반으로 새로운 값을 계산하는 함수
+        - 캐싱 : computed는 종속된 반응형 변수가 변경될 때만 재계산이 수행됨.
+                (반응형 변수의 이전 상태를 기억하고 있다가 바뀐 것을 확인 가능)
+        - 기본적으로 readonly
+  </pre>
+  
+  <div id="step1">
+    <!-- computed 사용 X -->
+    <!--<p>상품 가격 : <input type="number" v-model="price" @change="calc"></p>
+    <p>수량 : <input type="number" v-model="quantity"  @change="calc"></p>
+    <p>합계 : {{ total }}</p>-->
+    
+    <!-- computed 사용 O -->
+    <p>상품 가격 : <input type="number" v-model="price"></p>
+    <p>수량 : <input type="number" v-model="quantity"></p>
+    <p>합계 : {{ total2 }}</p>
+    
+    
+    <p>메세지: <input type="text" v-model="message"></p>
+  </div>
+  
+  <script>
+      const {createApp, ref, computed} = Vue;
+
+      createApp({
+          setup(){
+              const price = ref(1000);
+              const quantity = ref(1);
+              const total = ref(1000);
+
+              const calc = () => {
+                  total.value = price.value * quantity.value;
+              };
+
+              // 반응형 변수 price, quantity가 값이 변했을 때 마다
+              // 실시간으로 computed 함수가 호출되어 total2의 값을 변경
+              // + 반응형 변수의 값이 변했기 때문에
+              //   해당 반응형 변수를 사용하거나 관련있는 컴포넌트(vue instance)가
+              //   리렌더링 된다.
+              const total2 = computed(() => price.value * quantity.value);
+
+              // computed에 종속되지 않은 반응형 변수
+              // -> 아무리 변해봤자 total2가 변하지 않는다
+              const message = ref('');
+
+              return {
+                  price, quantity, total, calc, total2, message
+              }
+          }
+
+      }).mount('#step1');
+  </script>
+
+</body>
+</html>

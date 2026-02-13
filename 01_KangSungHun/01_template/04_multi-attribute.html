@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  
+  <div id="app">
+    <!-- 다중 속성 바인딩
+    v-bind:속성 -> 해당 속성에 대한 속성 값
+    v-bind     -> 대입된 객체의 key가 속성 명, value 속성 값으로 세팅
+    -->
+    <div v-bind="multiAttr">{{ multiAttr }}</div>
+    <div v-bind="multiAttr">{{ multiAttr.id }}</div>
+    <div v-bind="multiAttr">{{ multiAttr.class }}</div>
+    <div v-bind="multiAttr">{{ multiAttr.value }}</div>
+    
+    <button @click="handlerClick">ref에 담긴 객체 접근</button>
+    
+    <pre>{{resultText}}</pre>
+  
+  </div>
+  
+  
+  <script>
+      const {createApp, ref} = Vue;
+      //const createApp = Vue.createApp;
+      //const ref = Vue.ref;
+
+      createApp({
+          name: "app",
+
+          setup() {
+              // ref()의 값에 접근하려면  .value 이용
+              const multiAttr = ref({
+                  id: 'multiId',
+                  class: 'multiClass',
+                  value: 'multiValue'
+              });
+
+              const resultText = ref('');
+
+              const handlerClick = () => {
+                  resultText.value
+                      = `multiAttr.value.id : ${multiAttr.value.id}
+              multiAttr.value.class : ${multiAttr.value.class}
+              multiAttr.value.value : ${multiAttr.value.value}
+              `;
+              }
+
+              return {multiAttr, resultText, handlerClick};
+          }
+
+      }).mount('#app');
+  
+  
+  </script>
+
+</body>
+</html>

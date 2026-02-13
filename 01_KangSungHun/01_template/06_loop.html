@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>loop</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <!--
+    * v-for = "item in items"
+      - 배열이나 객체를 순회하며 리스트를 렌더링하는 디렉티브
+      - 일반적인 범위 반복도 가능
+      
+    * v-for = "(value, key, index) in items"
+      - 객체를 순회하면서 각각의 value, key, index를 얻어오는 반복문
+      - 변수명이 중요한게 아니라 매개 변수 순서가 중요함
+  -->
+  
+  <div id="step1">
+    <p>{{items}}</p>
+    
+    <!-- v-for가 설정된 요소(태그)가 반복됨-->
+    <ul>
+      <li v-for="item in items">
+        {{item}}
+      </li>
+    </ul>
+    
+    <!-- template 태그를 이용해서 v-for 범위 지정 가능 -->
+    <ul>
+      <template v-for="item in items">
+        <li>{{item}}</li>
+      </template>
+    </ul>
+    
+    <!-- 범위 반복 -->
+    <ul>
+      <!-- n은 1부터 10 이하 까지 1씩 증가 -->
+      <li v-for="n in 10">{{ n }}</li>
+    </ul>
+    
+    <h4>객체 반복</h4>
+    <ul>
+      <li v-for="(value, key, index) in profile">
+        {{value}} / {{key}} / {{index}}
+      </li>
+    </ul>
+  </div>
+  
+  
+  <hr>
+  <h1>:key 속성</h1>
+  <pre>
+    - Vue가 렌더링된 요소 목록을 업데이트할 때
+      v-for는 반복된 DOM 요소 전체를 확인하게 됨.
+    
+    - 이 때,  Vue가 각 노드의 id를 추적할 수 있도록 힌트를 주고
+      기존 요소를 재사용하여 순서를 변경함에 용이하게 하려면
+      key 정보를 제공해야 한다.
+    
+    - 결론 : Vue의 DOM 재사용 및 최적화를 위해 필요
+  </pre>
+  
+  <ul id="step2">
+    <button @click="shuffle">순서 섞기</button>
+    
+    <!-- key 속성은 식별되는 값 (객체의 id)을 이용해야 함
+          (주의사항. index를 사용 X) -->
+    <li :key="item.id" v-for="item in testItems">
+      {{ item.name }} : <input type="text">
+    </li>
+  </ul>
+  
+  
+  <script>
+      const {createApp, ref, reactive} = Vue;
+
+      createApp({
+          name: "v-for test app",
+          setup() {
+              const items = ref(['apple', 'banana', 'melon', 'orange']);
+
+              const profile = reactive({
+                  name: "홍길동",
+                  age: 20,
+                  address: "서울시 서초구"
+              });
+
+              return {items, profile};
+          }
+
+      }).mount("#step1");
+
+
+      createApp({
+          name: ":key test app",
+          setup() {
+              const testItems = ref([
+                  {id: 1, name: 'apple', state: true},
+                  {id: 2, name: 'banana', state: false},
+                  {id: 3, name: 'melon', state: true},
+                  {id: 4, name: 'orange', state: false},
+              ]);
+
+              const shuffle = () => {
+                  testItems.value.sort(() => Math.random() - 0.5);
+              }
+              return {testItems, shuffle};
+          }
+      }).mount("#step2");
+  
+  
+  </script>
+
+</body>
+</html>

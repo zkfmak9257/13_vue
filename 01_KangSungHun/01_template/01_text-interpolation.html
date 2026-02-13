@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <!--
+    [Vue Template]
+    - Vue가 화면을 어떻게 그릴(랜더링) 것이지 정의하는 설계도
+  -->
+  
+  <!--
+    * 텍스트 보간법 {{ }}: 텍스트 사이에 동적 데이터를 추가하는 구문
+    
+    * 디렉티브(지시문)
+     - Vue에서 제공하는 DOM 조작과 데이터 바인딩을 위한 속성
+     
+    * v-text : 지정된 요소에 text content 바인딩
+    
+    * v-html : 지정된 요소에 html content 바인딩
+  -->
+  
+  <div id="app">
+    <h4>message : {{message}}</h4>
+    <h4>test : {{test}}</h4>
+    
+    <hr>
+    <h4 v-text="message"> v-text="message" 값 (삭제 예정, 힌트 작성 용도) </h4>
+    
+    <hr>
+    <h3>v-html</h3>
+    <h4>{{rawHtml}}</h4>
+    <h4 v-text="rawHtml"></h4>
+    <h4 v-html="rawHtml"></h4>
+  
+  </div>
+  
+  <script>
+      // - 새로운 Vue 애플리케이션 인스턴스를 생성하는 함수이다.
+      // `createApp`은 Vue 인스턴스를 초기화하며,
+      // 데이터와 메서드 등의 옵션을 정의할 수 있다.
+
+      const {createApp} = Vue;
+
+      createApp({
+          setup(){
+
+              return {
+                  message : 'hello',
+                  test : '테스트 입니다.',
+                  rawHtml : '<span style="color:red">hello</span>' // 문자열
+              };
+          }
+
+      }).mount("#app"); // 만들어진 Vue 인스턴스를 #app에 붙임
+  
+  </script>
+
+</body>
+</html>
